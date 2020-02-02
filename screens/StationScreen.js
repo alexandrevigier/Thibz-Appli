@@ -14,21 +14,19 @@ class StationScreen extends React.Component{
     }
   }
 
-  _loadStations(){
-    getStationVelib.then(
-      this.setState({ stations: data.results})
+  componentDidMount(){
+    getStationVelib().then(data =>
+      this.setState({ stations: data.records})
     )
     }
 
   render(){
     return (
       <View>
-        <Button title="Station vélib" onPress={() => this._loadStations()}/>
-        <Text>TEST</Text>
         <FlatList 
                 data={this.state.stations}
-                keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => console.log(item)}/>
+                keyExtractor={(item) => item.recordid.toString()}
+                renderItem={({ item }) => <StationItem stations={item}/>}/>
       </View>
     )
   }
